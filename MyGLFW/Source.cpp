@@ -1,49 +1,13 @@
 #include <iostream>
 #include <GLFW\glfw3.h>
+#include "Vec3.hpp"
+#include "Triangle.hpp"
 
-class Vec3 {
-public :
-	float x, y, z;
-	Vec3(float _x, float _y, float _z) :x(_x), y(_y), z(_z) { }
-};
-class Trinagle {
-public://private:
-	Trinagle();
-	Vec3 trans;
-	Vec3 rot;
-	Vec3 scale;
-	float t;
-	
-//public:
-	void draw()
-	{
-		glPushMatrix();
-		glTranslatef(trans.x, trans.y, trans.z);
-		glRotatef(t, rot.x, rot.y, rot.z);
-		glScalef(scale.x, scale.y, scale.z);
-		drawTrinagle();
-		float size = 0.5f;
-		glBegin(GL_TRIANGLES);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-size, size, 0.0f);
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, size * 2, 0.0f);
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(size, size, 0.0f);
-		glEnd();
-		glPopMatrix();
-	}
-};
-void drawTrinagle() {
-	float size = 0.5f;
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(-size, size, 0.0f);
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, size * 2, 0.0f);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(size, size, 0.0f);
-	glEnd();
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_E && action == GLFW_PRESS)
+		std::cout << "I pressed E" << std::endl;
 }
 
 int main()
@@ -64,6 +28,7 @@ int main()
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
+	glfwSetKeyCallback(window, key_callback);
 
 	float size = 0.5f;
 	float t1 = 0.0f;
@@ -109,10 +74,14 @@ int main()
 		glEnd();
 		glPopMatrix();*/
 
-		Trinagle tri1;
-		Trinagle tri2;
+		Triangle tri1;
+		Triangle tri2;
 
-
+		tri1.trans = Vec3(0.5f, 0, 0);
+		tri1.rot = Vec3(0, 1, 0);
+		tri1.scale = Vec3(0.5f, 0.5f, 0.5f);
+		tri1.t = t2;
+		tri1.draw();
 
 
 

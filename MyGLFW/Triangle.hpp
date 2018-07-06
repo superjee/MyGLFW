@@ -22,7 +22,6 @@ public:
 		glTranslatef(trans.x, trans.y, trans.z);
 		glRotatef(t, rot.x, rot.y, rot.z);
 		glScalef(scale.x, scale.y, scale.z);
-		drawTrinagle();
 		float size = 0.5f;
 		glBegin(GL_TRIANGLES);
 		glColor3f(1.0f, 0.0f, 0.0f);

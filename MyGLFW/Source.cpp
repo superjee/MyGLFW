@@ -1,23 +1,28 @@
 #include <iostream>
+#include <glew.h> //Must Top On glfw3
 #include <GLFW\glfw3.h>
 #include "Vec3.hpp"
-#include "Triangle.hpp"
+#include "Triangle.hpp"   
+#include <crtdbg.h>
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include "glm-master\glm\vec2.hpp"
 
-int WIDTH = 1280;
-int HEIGHT = 980;
+
+
+int WIDTH = 1920;
+int HEIGHT = 1080;
 int SetNum = 1;
 class RainDrop {
-public :
+private :
 	float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	float dummyX = rand() % 2;
 	float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	float dummyY = rand() % 3 + 1;
 	float length = 0.05f;
 	float yspeed = (static_cast <float> (rand()) / static_cast <float> (RAND_MAX))/70;
-
+public:
 	RainDrop() {
 		if (dummyX == 1)
 		{
@@ -93,6 +98,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	glm::vec2 v;
+	v.x = 5;
+	v.y = 10;
+
+	std::cout << v.y << std::endl;
+
+
 	srand(time(NULL));
 	GLFWwindow *window = nullptr;
 
@@ -102,7 +116,7 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
-	window = glfwCreateWindow(1280, 960, "My Game", nullptr, window);
+	window = glfwCreateWindow(WIDTH, HEIGHT, "My Game", glfwGetPrimaryMonitor() /*nullptr*/, window);
 	if (!window)
 	{
 		glfwTerminate();
@@ -110,6 +124,26 @@ int main()
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetKeyCallback(window, key_callback);
+
+	/**/
+	GLenum result = glewInit();
+	if (result != GLEW_OK)
+	{
+		std::cout << "GLEW error:" <<
+			glewGetErrorString(result) << std::endl;
+		getchar();
+		return 0;
+	}
+
+	const auto glVersion = glGetString(GL_VERSION);
+	std::cout << "GL version : " << glVersion << std::endl;
+
+	const GLubyte* shaderVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+	std::cout << "GLSL version : " << shaderVersion << std::endl;
+
+	/*glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);*/
 
 	int MAX_RAIN = 1000;
 	RainDrop *rain = new RainDrop[MAX_RAIN];
@@ -182,7 +216,7 @@ int main()
 
 	}
 	glfwTerminate();
-	delete rain;
+	delete []rain;
 	getchar();
 	return 0;
 }

@@ -8,11 +8,11 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include "glm-master\glm\vec2.hpp"
+#include "App.h"
 
 
-
-int WIDTH = 1920;
-int HEIGHT = 1080;
+int WIDTH = 800;//192;
+int HEIGHT = 600;//108;
 int SetNum = 1;
 class RainDrop {
 private :
@@ -77,7 +77,7 @@ public:
 };
 
 bool isClose = false;
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+/*void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_E && action == GLFW_PRESS)
 	{
@@ -94,67 +94,33 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		std::cout << "2" << std::endl;
 		SetNum = 2;
 	}
-}
+}*/
+
+/*glm::vec2 v;
+v.x = 5;
+v.y = 10;
+std::cout << v.y << std::endl;*/
+
+/*int MAX_RAIN = 1000;
+RainDrop *rain = new RainDrop[MAX_RAIN];
+
+float r = 0.0f;
+float g = 0.0f;
+float b = 0.0f;
+bool color_up = true;*/
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	glm::vec2 v;
-	v.x = 5;
-	v.y = 10;
-
-	std::cout << v.y << std::endl;
-
-
 	srand(time(NULL));
-	GLFWwindow *window = nullptr;
 
-	/*initialize the glfw system*/
-	if (!glfwInit())
-	{
-		glfwTerminate();
-		return -1;
-	}
-	window = glfwCreateWindow(WIDTH, HEIGHT, "My Game", glfwGetPrimaryMonitor() /*nullptr*/, window);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-	glfwMakeContextCurrent(window);
-	glfwSetKeyCallback(window, key_callback);
-
-	/**/
-	GLenum result = glewInit();
-	if (result != GLEW_OK)
-	{
-		std::cout << "GLEW error:" <<
-			glewGetErrorString(result) << std::endl;
-		getchar();
-		return 0;
-	}
-
-	const auto glVersion = glGetString(GL_VERSION);
-	std::cout << "GL version : " << glVersion << std::endl;
-
-	const GLubyte* shaderVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-	std::cout << "GLSL version : " << shaderVersion << std::endl;
-
-	/*glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);*/
-
-	int MAX_RAIN = 1000;
-	RainDrop *rain = new RainDrop[MAX_RAIN];
-
-	float r = 0.0f;
-	float g = 0.0f;
-	float b = 0.0f;
-	bool color_up = true;
+	App app;
+	app.init(WIDTH, HEIGHT, "MyApp");
+	app.Start();
 
 	/*game loop*/
-	while (!glfwWindowShouldClose(window) && isClose == false)
+	/*while (!glfwWindowShouldClose(window) && isClose == false)
 	{
 		glClear(GL_COLOR_BUFFER_BIT); // render color
 		if (color_up)
@@ -216,7 +182,7 @@ int main()
 
 	}
 	glfwTerminate();
-	delete []rain;
+	delete []rain;*/
 	getchar();
 	return 0;
 }
